@@ -8,9 +8,19 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+polars = "^1.19.0"
+ipykernel = "^6.29.5"
 
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.group.dev.dependencies]
+python-semantic-release = "^9.15.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+[tool.semantic_release] 
+version_variable = "pyproject.toml:version" 
+version_toml = [ 
+"pyproject.toml:tool.poetry.version", 
+] 
