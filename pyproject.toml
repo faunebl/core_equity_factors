@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "core_equity_factors"
-version = "0.0.0"
+version = "0.1.0"
 description = "Econometrics project M2 203"
 authors = ["Faune Blanchard"]
 license = "MIT"
