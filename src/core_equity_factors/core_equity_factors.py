@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet, LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
-from sklearn.decomposition import KernelPCA
+# from sklearn.decomposition import KernelPCA
 
 #! Code has been adapted from code I wrote during my master's thesis, which is also available on my githug
 
