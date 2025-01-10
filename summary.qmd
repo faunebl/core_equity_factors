@@ -1,0 +1,77 @@
+---
+title: "Timing the Core Equity Factor: Summary"
+author: Faune Blanchard
+format:
+  pdf:
+    documentclass: article
+    colorlinks: true
+    latex-auto-install: true
+    classoption: a4paper
+    geometry: margin=1in
+    keep-tex: true
+    toc: true
+    toc-depth: 4
+    number-sections: true
+css: |
+  p {
+    text-align: justify;
+  }
+---
+
+\newpage
+
+## Introduction
+
+This report summarizes our analysis of European equity returns to time the core equity factor. We used Principal Component Analysis (PCA) to extract the first latent factor, evaluated the replicating portfolio’s alpha, and examined the performance of a long/flat investment strategy derived from the portfolio's slope trends.
+
+## Part 1: Principal Component Analysis (PCA)
+
+To extract the core factor, we applied PCA to the European equity returns and identified the first latent factor, denoted as $F_1$. This factor was rescaled to match the benchmark’s volatility. Additionally, we adjusted the sign of $F_1$ to ensure a positive correlation with stock returns.
+
+We estimated the sensitivities of individual stocks to $F_1$ using a linear regression model. The equation used for this estimation was: $$r_{i,t} = \alpha_i + \hat{b}_{1,i} F_{1,t} + \varepsilon_t.$$
+
+The beta values of individual stocks to the core factor vary significantly, as shown in the beta distribution plot:
+
+![Beta of each stock to the PC1](C:\Users\faune\core-equity-factors\graphs\beta_stocks_pc1.png){fig-align="center" width="100%"}
+
+This variability reflects differences in their alignment with the core equity factor.
+
+Subsequently, we constructed a replicating portfolio for $F_1$ by optimizing the portfolio weights to minimize variance. This optimization was carried out under the constraints of maintaining a unitary sensitivity to $F_1$, ensuring non-negative weights, and setting the total weight to one. We end up with a rougly equally weighted portfolio.
+
+![Weight of each stock in the Replicating portfolio](C:\Users\faune\core-equity-factors\graphs\weights_ptf.png){fig-align="center" width="100%"}
+
+\newpage
+
+## Part 2: Portfolio Alpha and Confidence Analysis
+
+The replicating portfolio we designed demonstrated a neutral alpha when compared to the Eurostoxx 50 index, indicating its potential to replicate the benchmark. We assessed the impact of estimation errors in the covariance matrix on this alpha by employing a bootstrap methodology. This approach allowed us to estimate the 95% confidence interval for the alpha and address biases introduced by sample covariance errors.
+
+We visualized the strategy’s alpha and its confidence interval:
+
+![Bootstrapped Alphas](C:\Users\faune\core-equity-factors\graphs\alpha_market.png){fig-align="center" width="70%"}
+
+The orange lines in the plot represent the confidence intervals, highlighting that the strategy's alpha is centered around 0, replicating the index.
+
+\newpage
+
+## Part 3: Investment Strategy
+
+To further analyze the replicating portfolio, we estimated its price index, $I_{1,t}$, using a local linear trend model. This model enabled us to decompose the price index into its trend component, $T_{1,t}$, and slope, $S_{1,t}$. We then derived an investment strategy based on the slope’s behavior. Specifically, when $S_{1,t-1}$ was greater than zero, we allocated to the replicating portfolio. Conversely, when $S_{1,t-1}$ was less than or equal to zero, we allocated to cash at a constant 3% annual risk-free rate.
+
+We recoded the kalman filter and got this output:
+
+![Kalman Filter Output](C:\Users\faune\core-equity-factors\graphs\kalman_output.png){fig-align="center" width="70%"}
+
+In price, this is how the strategy performed compared to the benchmark:
+
+![Performance of the Strategy vs Benchmark](C:\Users\faune\core-equity-factors\graphs\return_strat.png){fig-align="center" width="70%"}
+
+\newpage 
+
+To evaluate the effectiveness of this strategy, we tested whether its Sharpe ratio was due to luck or if it was statistically significant. The performance of the strategy turned out to be mostly insignificant and due to luck, according to our analysis using sharpe ratios from long/flat strategies that decided whether to invest in the portfolio or not at random.
+
+![Randomized Sharpe Ratios](C:\Users\faune\core-equity-factors\graphs\sharpe_ratios.png){fig-align="center" width="70%"}
+
+## Conclusion
+
+Our analysis underscores the utility of PCA for identifying core equity factors and constructing replicating portfolios. The replicating portfolio’s positive alpha and statistically significant Sharpe ratio demonstrate the practicality of these techniques in timing equity factors. Future work could explore dynamic weighting schemes to enhance the portfolio’s robustness in varying market conditions.
